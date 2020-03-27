@@ -2,6 +2,8 @@ import 'package:flash_chat/components/logo.dart';
 import 'package:flash_chat/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import '../components/rounded_button.dart';
+import '../utilities/routes.dart';
+import '../components/text_button.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -29,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 48.0,
             ),
             TextField(
+              keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
                 //Do something with the user input.
               },
@@ -40,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 8.0,
             ),
             TextField(
+              obscureText: true,
               onChanged: (value) {
                 //Do something with the user input.
               },
@@ -54,6 +58,21 @@ class _LoginScreenState extends State<LoginScreen> {
               label: 'Log In',
               color: Theme.of(context).primaryColor,
               onTap: () {},
+            ),
+            SizedBox(
+              height: 48.0,
+            ),
+            Text(
+              'Don\'t have an account yet?',
+              textAlign: TextAlign.center,
+              style: kPromptStyle,
+            ),
+            TextButton(
+              label: 'Register',
+              color: Theme.of(context).primaryColor,
+              onTap: () {
+                Navigator.pushNamed(context, Routes.register);
+              },
             ),
           ],
         ),

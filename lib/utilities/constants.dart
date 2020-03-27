@@ -39,7 +39,16 @@ const kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kAccentColor, width: 2.0),
+    borderSide: BorderSide(color: kPrimaryColor, width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
+);
+
+// Use for prompts on auth screens
+const kPromptStyle = TextStyle(
+  color: Colors.white,
+);
+
+const kErrorStyle = TextStyle(
+  color: Colors.white,
 );
