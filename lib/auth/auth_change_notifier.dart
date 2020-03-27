@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'auth_service.dart';
-import '../utilities/failure.dart';
+import '../data/model/failure.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 enum NotifierState { initial, loading, loaded }
@@ -26,6 +26,16 @@ class AuthChangeNotifier extends ChangeNotifier {
   void registerUser(String email, String password) async {
     _setState(NotifierState.loading);
     await Task(() => _authService.registerUser(email, password))
+        .attempt()
+        .mapLeftToFailure()
+        .run()
+        .then((value) => _setUser(value));
+    _setState(NotifierState.loaded);
+  }
+
+  void signInUser(String email, String password) async {
+    _setState(NotifierState.loading);
+    await Task(() => _authService.signInUser(email, password))
         .attempt()
         .mapLeftToFailure()
         .run()

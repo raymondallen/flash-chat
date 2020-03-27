@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../components/rounded_button.dart';
 import '../utilities/routes.dart';
 import '../components/text_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -11,6 +13,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String email;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
             TextField(
               keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
-                //Do something with the user input.
+                email = value;
               },
               decoration: kTextFieldDecoration.copyWith(
                 hintText: 'Enter your email',
@@ -45,19 +50,47 @@ class _LoginScreenState extends State<LoginScreen> {
             TextField(
               obscureText: true,
               onChanged: (value) {
-                //Do something with the user input.
+                password = value;
               },
               decoration: kTextFieldDecoration.copyWith(
                 hintText: 'Enter your password',
               ),
             ),
             SizedBox(
-              height: 24.0,
+              height: 12.0,
+            ),
+            BlocListener<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is AuthLoaded) {
+                  Navigator.pushNamed(context, Routes.chat);
+                }
+              },
+              child: BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  if (state is AuthLoading) {
+                    return LinearProgressIndicator();
+                  } else if (state is AuthLoaded) {
+                    return Text('');
+                  } else if (state is AuthError) {
+                    return Text(
+                      state.failure.message,
+                      textAlign: TextAlign.center,
+                      style: kErrorStyle,
+                    );
+                  } else
+                    return SizedBox(
+                      height: 0,
+                    );
+                },
+              ),
             ),
             RoundedButton(
               label: 'Log In',
               color: Theme.of(context).primaryColor,
-              onTap: () {},
+              onTap: () {
+                BlocProvider.of<AuthBloc>(context)
+                    .add(SignInUser(email, password));
+              },
             ),
             SizedBox(
               height: 48.0,
@@ -71,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
               label: 'Register',
               color: Theme.of(context).primaryColor,
               onTap: () {
-                Navigator.pushNamed(context, Routes.register);
+                Navigator.pushNamed(context, Routes.login);
               },
             ),
           ],

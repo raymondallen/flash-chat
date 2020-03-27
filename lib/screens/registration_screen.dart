@@ -59,9 +59,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             SizedBox(
               height: 12.0,
             ),
-            Consumer<AuthChangeNotifier>(
+            /*Consumer<AuthChangeNotifier>(
               builder: (_, notifier, __) {
-                if (notifier.state == NotifierState.loading) {
+                if (notifier.state == NotifierState.initial) {
+                  return Text('');
+                } else if (notifier.state == NotifierState.loading) {
                   return LinearProgressIndicator();
                 } else {
                   return notifier.user.fold(
@@ -78,7 +80,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   );
                 }
               },
-            ),
+            ),*/
             RoundedButton(
               label: 'Register',
               color: Theme.of(context).primaryColor,

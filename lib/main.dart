@@ -5,18 +5,21 @@ import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 import 'utilities/routes.dart';
 import 'utilities/constants.dart';
-import 'auth/auth_change_notifier.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'bloc/bloc.dart';
+import 'data/firebase_user_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() => runApp(FlashChat());
 
 class FlashChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider<AuthChangeNotifier>(
-            create: (_) => AuthChangeNotifier()),
+        BlocProvider<AuthBloc>(
+            create: (_) =>
+                AuthBloc(FirebaseUserRepository(FirebaseAuth.instance))),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
