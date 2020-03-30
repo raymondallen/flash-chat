@@ -11,7 +11,7 @@ const kTextColor = Color(0xff212121);
 const kLogoTag = 'logo';
 
 const kSendButtonTextStyle = TextStyle(
-  color: Colors.lightBlueAccent,
+  color: kPrimaryColor,
   fontWeight: FontWeight.bold,
   fontSize: 18.0,
 );
@@ -24,7 +24,7 @@ const kMessageTextFieldDecoration = InputDecoration(
 
 const kMessageContainerDecoration = BoxDecoration(
   border: Border(
-    top: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+    top: BorderSide(color: kPrimaryColor, width: 2.0),
   ),
 );
 

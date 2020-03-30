@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import '../utilities/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/auth/auth_bloc.dart';
 
 class ChatScreen extends StatefulWidget {
+  final user;
+
+  ChatScreen(this.user);
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -16,11 +22,10 @@ class _ChatScreenState extends State<ChatScreen> {
           IconButton(
               icon: Icon(Icons.close),
               onPressed: () {
-                //Implement logout functionality
+                BlocProvider.of<AuthBloc>(context).add(LoggedOut());
               }),
         ],
-        title: Text('⚡️Chat'),
-        backgroundColor: Colors.lightBlueAccent,
+        title: Text('Flash Chat'),
       ),
       body: SafeArea(
         child: Column(
@@ -32,6 +37,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  Text(widget.user.name),
                   Expanded(
                     child: TextField(
                       onChanged: (value) {
