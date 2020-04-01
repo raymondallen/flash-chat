@@ -44,6 +44,33 @@ const kTextFieldDecoration = InputDecoration(
   ),
 );
 
+const kTextFormFieldDecoration = InputDecoration(
+  hintText: '',
+  enabledBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: kAccentColor,
+    ),
+  ),
+  focusedBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: kPrimaryColor,
+    ),
+  ),
+  errorBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: kPrimaryColor,
+    ),
+  ),
+  errorStyle: TextStyle(
+    color: kPrimaryColor,
+  ),
+  focusedErrorBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: kPrimaryColor,
+    ),
+  ),
+);
+
 // Use for prompts on auth screens
 const kPromptStyle = TextStyle(
   color: Colors.white,

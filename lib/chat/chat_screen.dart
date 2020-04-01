@@ -1,7 +1,7 @@
+import 'package:flash_chat/core/auth/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import '../utilities/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/auth/auth_bloc.dart';
 
 class ChatScreen extends StatefulWidget {
   final user;
@@ -13,6 +13,12 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  @override
+  void initState() {
+    print('CHAT SCREEN');
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +43,6 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text(widget.user.name),
                   Expanded(
                     child: TextField(
                       onChanged: (value) {

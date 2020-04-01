@@ -17,6 +17,6 @@ class User extends Equatable {
 
   @override
   String toString() {
-    return '{ ${this.id}, ${this.name}, ${this.email.toString()} }';
+    return '{ id: ${this.id}, name: ${this.name}, email: ${this.email.toString()} }';
   }
 }

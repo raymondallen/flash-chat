@@ -1,48 +1,39 @@
-import 'package:flash_chat/bloc/auth/auth_bloc.dart';
-import 'package:flash_chat/bloc/login/bloc/login_bloc.dart';
 import 'package:flash_chat/components/logo.dart';
-import 'package:flash_chat/data/user_repository.dart';
+import 'package:flash_chat/components/rounded_button.dart';
+import 'package:flash_chat/components/text_button.dart';
+import 'package:flash_chat/core/auth/auth_bloc.dart';
 import 'package:flash_chat/utilities/constants.dart';
 import 'package:flutter/material.dart';
-import '../components/rounded_button.dart';
-import '../utilities/routes.dart';
-import '../components/text_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flash_chat/core/navigator/navigator_bloc.dart';
+import 'bloc/login_bloc.dart';
 
 class LoginForm extends StatefulWidget {
-  final UserRepository _userRepository;
-
-  LoginForm({Key key, @required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
-        super(key: key);
-
   @override
   _LoginFormState createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
-  String email = '';
-  String password = '';
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   LoginBloc _loginBloc;
+  NavigatorBloc _navigatorBloc;
 
-  UserRepository get _userRepository => widget._userRepository;
-
-  bool get isPopulated => email != '' && password != '';
-  //    _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+  bool get isPopulated =>
+      _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
 
   bool isLoginButtonEnabled(LoginState state) {
-    return true;
-    //return state.isFormValid && isPopulated && !state.isSubmitting;
+    return state.isFormValid && isPopulated && !state.isSubmitting;
   }
 
   @override
   void initState() {
     super.initState();
     _loginBloc = BlocProvider.of<LoginBloc>(context);
-    //_emailController.addListener(_onEmailChanged);
-    //_passwordController.addListener(_onPasswordChanged);
+    _navigatorBloc = BlocProvider.of<NavigatorBloc>(context);
+    _emailController.addListener(_onEmailChanged);
+    _passwordController.addListener(_onPasswordChanged);
   }
 
   @override
@@ -106,26 +97,35 @@ class _LoginFormState extends State<LoginForm> {
                   SizedBox(
                     height: 48.0,
                   ),
-                  TextField(
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: kTextFormFieldDecoration.copyWith(
+                      icon: Icon(
+                        Icons.email,
+                      ),
+                      labelText: 'Email',
+                    ),
                     keyboardType: TextInputType.emailAddress,
-                    onChanged: (value) {
-                      email = value;
+                    autovalidate: true,
+                    autocorrect: false,
+                    validator: (_) {
+                      return !state.isEmailValid ? 'Invalid Email' : null;
                     },
-                    decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your email',
+                  ),
+                  TextFormField(
+                    controller: _passwordController,
+                    decoration: kTextFormFieldDecoration.copyWith(
+                      icon: Icon(
+                        Icons.lock,
+                      ),
+                      labelText: 'Password',
                     ),
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  TextField(
                     obscureText: true,
-                    onChanged: (value) {
-                      password = value;
+                    autovalidate: true,
+                    autocorrect: false,
+                    validator: (_) {
+                      return !state.isPasswordValid ? 'Invalid Password' : null;
                     },
-                    decoration: kTextFieldDecoration.copyWith(
-                      hintText: 'Enter your password',
-                    ),
                   ),
                   SizedBox(
                     height: 12.0,
@@ -148,7 +148,7 @@ class _LoginFormState extends State<LoginForm> {
                     label: 'Register',
                     color: Theme.of(context).primaryColor,
                     onTap: () {
-                      Navigator.pushNamed(context, Routes.login);
+                      _navigatorBloc.add(NavigateToRegister());
                     },
                   ),
                 ],
@@ -161,14 +161,30 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _onFormSubmitted() {
-    print('SUBMITTED');
     _loginBloc.add(
       LoginWithCredentialsPressed(
-        //email: _emailController.text,
-        //password: _passwordController.text,
-        email: email,
-        password: password,
+        email: _emailController.text,
+        password: _passwordController.text,
       ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _onEmailChanged() {
+    _loginBloc.add(
+      EmailChanged(email: _emailController.text),
+    );
+  }
+
+  void _onPasswordChanged() {
+    _loginBloc.add(
+      PasswordChanged(password: _passwordController.text),
     );
   }
 }

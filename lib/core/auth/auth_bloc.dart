@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import '../../data/model/user.dart';
 import '../../data/model/failure.dart';
 import 'package:bloc/bloc.dart';
@@ -11,7 +12,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserRepository _repo;
 
-  AuthBloc(UserRepository userRepository)
+  AuthBloc({@required UserRepository userRepository})
       : assert(userRepository != null),
         _repo = userRepository;
 
@@ -22,8 +23,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Stream<AuthState> mapEventToState(
     AuthEvent event,
   ) async* {
-    print('EVENT');
-    print(event);
     if (event is AppStarted) {
       yield* _mapAppStartedToState();
     } else if (event is LoggedIn) {
@@ -35,7 +34,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Stream<AuthState> _mapAppStartedToState() async* {
     try {
-      print('App Started');
       final isSignedIn = await _repo.isSignedIn();
       if (isSignedIn) {
         final userOption = await _repo.getUser();
@@ -44,7 +42,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           (user) => Authenticated(user),
         );
       } else {
-        print('UNAUTHENTICATED');
         yield Unauthenticated();
       }
     } catch (_) {
