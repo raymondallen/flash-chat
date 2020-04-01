@@ -7,6 +7,7 @@ const kAccentColor = Color(0xff9E9E9E);
 const kPrimaryColorLight = Color(0xffF8BBD0);
 const kDividerColor = Color(0xffBDBDBD);
 const kTextColor = Color(0xff212121);
+const kTextSelectionColor = Color(0xffE91E63);
 
 const kLogoTag = 'logo';
 

@@ -33,6 +33,7 @@ class App extends StatelessWidget {
         accentColor: kAccentColor,
         primaryColorLight: kPrimaryColorLight,
         dividerColor: kDividerColor,
+        textSelectionColor: kTextSelectionColor,
         textTheme: TextTheme(
           body1: TextStyle(color: kTextColor),
         ),

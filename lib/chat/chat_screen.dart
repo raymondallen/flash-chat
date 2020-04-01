@@ -14,12 +14,6 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   @override
-  void initState() {
-    print('CHAT SCREEN');
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -42,6 +36,13 @@ class _ChatScreenState extends State<ChatScreen> {
               decoration: kMessageContainerDecoration,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Expanded(
                     child: TextField(
