@@ -1,71 +1,30 @@
-import 'package:flash_chat/core/auth/auth_bloc.dart';
+import 'package:flash_chat/data/model/user.dart';
 import 'package:flutter/material.dart';
-import '../utilities/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:message_repository/message_repository.dart';
+import 'bloc/message_bloc.dart';
+import 'chat_form.dart';
 
-class ChatScreen extends StatefulWidget {
-  final user;
+class ChatScreen extends StatelessWidget {
+  final User _user;
 
-  ChatScreen(this.user);
+  ChatScreen({Key key, @required User user})
+      : assert(user != null),
+        _user = user,
+        super(key: key);
 
-  @override
-  _ChatScreenState createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: null,
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                BlocProvider.of<AuthBloc>(context).add(LoggedOut());
-              }),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<MessageBloc>(
+            create: (context) => MessageBloc(
+              messageRepository: FirestoreMessageRepository(),
+            )..add(LoadMessages()),
+          ),
         ],
-        title: Text('Flash Chat'),
-      ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              decoration: kMessageContainerDecoration,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      onChanged: (value) {
-                        //Do something with the user input.
-                      },
-                      decoration: kMessageTextFieldDecoration,
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      //Implement send functionality.
-                    },
-                    child: Text(
-                      'Send',
-                      style: kSendButtonTextStyle,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+        child: ChatForm(_user),
       ),
     );
   }

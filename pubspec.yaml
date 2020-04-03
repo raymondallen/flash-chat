@@ -20,6 +20,9 @@ dependencies:
   flutter_bloc: ^3.2.0
   equatable: ^1.1.1
 
+  message_repository:
+    path: message_repository
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

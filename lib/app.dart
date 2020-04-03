@@ -51,9 +51,9 @@ class App extends StatelessWidget {
       home: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is Authenticated) {
-            print('AUTHENTICATED');
-            print(state.user);
-            return ChatScreen(state.user);
+            return ChatScreen(
+              user: state.user,
+            );
           }
           if (state is Unauthenticated) {
             return LoginScreen(
