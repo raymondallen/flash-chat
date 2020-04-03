@@ -6,6 +6,8 @@ import 'package:message_repository/message_repository.dart';
 import '../utilities/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'message_bubble.dart';
+
 class ChatForm extends StatefulWidget {
   final user;
 
@@ -20,6 +22,7 @@ class _ChatFormState extends State<ChatForm> {
   MessageBloc _messageBloc;
   User _user;
   List<Message> _messages = [];
+  final ScrollController _listScrollController = new ScrollController();
 
   final TextEditingController _textController = TextEditingController();
   bool get isPopulated => _textController.text.isNotEmpty;
@@ -60,56 +63,57 @@ class _ChatFormState extends State<ChatForm> {
             ],
             title: Text('Flash Chat'),
           ),
-          body: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: _messages.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final message = _messages[index];
-                      return Text(
-                        message.text,
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      );
-                    },
-                  ),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Flexible(
+                child: ListView.builder(
+                  reverse: true,
+                  controller: _listScrollController,
+                  itemCount: _messages.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final message = _messages[index];
+                    final nextSender = (index < _messages.length - 1
+                        ? _messages[index + 1].sender
+                        : '');
+                    return MessageBubble(
+                        message: message,
+                        userName: _user.name,
+                        nextSender: nextSender);
+                  },
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Expanded(
-                        child: TextFormField(
-                          controller: _textController,
-                          decoration: kMessageTextFieldDecoration,
-                          focusNode: _focusNode,
-                          keyboardType: TextInputType.text,
-                          autovalidate: true,
-                          autocorrect: false,
-                        ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      child: TextFormField(
+                        controller: _textController,
+                        decoration: kMessageTextFieldDecoration,
+                        focusNode: _focusNode,
+                        keyboardType: TextInputType.text,
+                        autovalidate: true,
+                        autocorrect: false,
                       ),
-                      FlatButton(
-                        onPressed: () {
-                          _onSubmit(
-                              _textController.text, _user.email, _user.name);
-                          _focusNode.requestFocus();
-                        },
-                        child: Text(
-                          'Send',
-                          style: kSendButtonTextStyle,
-                        ),
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        _onSubmit(
+                            _textController.text, _user.email, _user.name);
+                        //_focusNode.requestFocus();
+                      },
+                      child: Text(
+                        'Send',
+                        style: kSendButtonTextStyle,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       }),

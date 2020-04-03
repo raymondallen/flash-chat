@@ -22,7 +22,10 @@ A modern messaging app where users can sign up and log in to chat.
 - Learn to use ListViews to build scrolling views.
 - How to use Firebase Cloud Firestore to store and retrieve data on the fly.
 
+## Customisations
 
+- Styling changes
+- Implemented BLoC pattern for user authentication, login, register and chat screens
 
 >This is a companion project to The App Brewery's Complete Flutter Development Bootcamp, check out the full course at [www.appbrewery.co](https://www.appbrewery.co/)
 

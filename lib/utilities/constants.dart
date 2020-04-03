@@ -29,22 +29,6 @@ const kMessageContainerDecoration = BoxDecoration(
   ),
 );
 
-const kTextFieldDecoration = InputDecoration(
-  hintText: '',
-  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-  border: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  ),
-  enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kAccentColor, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  ),
-  focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kPrimaryColor, width: 2.0),
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  ),
-);
-
 const kTextFormFieldDecoration = InputDecoration(
   hintText: '',
   enabledBorder: UnderlineInputBorder(
@@ -79,4 +63,14 @@ const kPromptStyle = TextStyle(
 
 const kErrorStyle = TextStyle(
   color: Colors.white,
+);
+
+const kMessageStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 14,
+);
+
+const kSenderStyle = TextStyle(
+  fontSize: 12.0,
+  color: Colors.white70,
 );
