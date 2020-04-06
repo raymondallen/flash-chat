@@ -9,7 +9,7 @@ The objective of this tutorial was to learn how to incorporate Firebase into Flu
 
 A modern messaging app where users can sign up and log in to chat.
 
-![Finished App] [https://github.com/raymondallen/flash-chat/blob/master/demo.gif]
+![Finished App](https://github.com/raymondallen/flash-chat/blob/master/demo.gif)
 
 ## Learning Objectives
 
