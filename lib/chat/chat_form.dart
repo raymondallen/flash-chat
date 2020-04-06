@@ -79,7 +79,7 @@ class _ChatFormState extends State<ChatForm> {
                         : '');
                     return MessageBubble(
                         message: message,
-                        userName: _user.name,
+                        email: _user.email,
                         nextSender: nextSender);
                   },
                 ),
