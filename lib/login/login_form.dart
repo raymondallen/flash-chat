@@ -80,94 +80,79 @@ class _LoginFormState extends State<LoginForm> {
       },
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
-          return LayoutBuilder(
-            builder:
-                (BuildContext context, BoxConstraints viewportConstraints) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: viewportConstraints.maxHeight,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Hero(
-                          tag: kLogoTag,
-                          child: Container(
-                            height: 200.0,
-                            child: Logo(),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 48.0,
-                        ),
-                        TextFormField(
-                          controller: _emailController,
-                          decoration: kTextFormFieldDecoration.copyWith(
-                            icon: Icon(
-                              Icons.email,
-                            ),
-                            labelText: 'Email',
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          autovalidate: true,
-                          autocorrect: false,
-                          validator: (_) {
-                            return !state.isEmailValid ? 'Invalid Email' : null;
-                          },
-                        ),
-                        TextFormField(
-                          controller: _passwordController,
-                          decoration: kTextFormFieldDecoration.copyWith(
-                            icon: Icon(
-                              Icons.lock,
-                            ),
-                            labelText: 'Password',
-                          ),
-                          obscureText: true,
-                          autovalidate: true,
-                          autocorrect: false,
-                          validator: (_) {
-                            return !state.isPasswordValid
-                                ? 'Invalid Password'
-                                : null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 12.0,
-                        ),
-                        RoundedButton(
-                          label: 'Log In',
-                          color: Theme.of(context).primaryColor,
-                          onTap: isLoginButtonEnabled(state)
-                              ? _onFormSubmitted
-                              : null,
-                        ),
-                        SizedBox(
-                          height: 48.0,
-                        ),
-                        Text(
-                          'Don\'t have an account yet?',
-                          textAlign: TextAlign.center,
-                          style: kPromptStyle,
-                        ),
-                        TextButton(
-                          label: 'Register',
-                          color: Theme.of(context).primaryColor,
-                          onTap: () {
-                            _navigatorBloc.add(NavigateToRegister());
-                          },
-                        ),
-                      ],
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Flexible(
+                  child: Hero(
+                    tag: kLogoTag,
+                    child: Container(
+                      height: 200.0,
+                      child: Logo(),
                     ),
                   ),
                 ),
-              );
-            },
+                SizedBox(
+                  height: 48.0,
+                ),
+                TextFormField(
+                  controller: _emailController,
+                  decoration: kTextFormFieldDecoration.copyWith(
+                    icon: Icon(
+                      Icons.email,
+                    ),
+                    labelText: 'Email',
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  autovalidate: true,
+                  autocorrect: false,
+                  validator: (_) {
+                    return !state.isEmailValid ? 'Invalid Email' : null;
+                  },
+                ),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: kTextFormFieldDecoration.copyWith(
+                    icon: Icon(
+                      Icons.lock,
+                    ),
+                    labelText: 'Password',
+                  ),
+                  obscureText: true,
+                  autovalidate: true,
+                  autocorrect: false,
+                  validator: (_) {
+                    return !state.isPasswordValid ? 'Invalid Password' : null;
+                  },
+                ),
+                SizedBox(
+                  height: 12.0,
+                ),
+                RoundedButton(
+                  label: 'Log In',
+                  color: Theme.of(context).primaryColor,
+                  onTap: isLoginButtonEnabled(state) ? _onFormSubmitted : null,
+                ),
+                SizedBox(
+                  height: 12.0,
+                ),
+                Text(
+                  'Don\'t have an account yet?',
+                  textAlign: TextAlign.center,
+                  style: kPromptStyle,
+                ),
+                TextButton(
+                  label: 'Register',
+                  color: Theme.of(context).primaryColor,
+                  onTap: () {
+                    _navigatorBloc.add(NavigateToRegister());
+                  },
+                ),
+              ],
+            ),
           );
         },
       ),
