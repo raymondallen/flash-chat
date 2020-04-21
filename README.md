@@ -26,7 +26,13 @@ A modern messaging app where users can sign up and log in to chat.
 
 - Styling changes
 - Implemented BLoC pattern for user authentication, login, register and chat screens
-- Created the message repository as a standalone package that can be reused in other projects if necessary 
+- Created the message repository as a standalone package that can be reused in other projects if necessary
+
+## Installing
+- Clone the repos and then add Firebase to the app
+
+![Firebase Setup](https://firebase.google.com/docs/flutter/setup)
+
 
 >This is a companion project to The App Brewery's Complete Flutter Development Bootcamp, check out the full course at [www.appbrewery.co](https://www.appbrewery.co/)
 
